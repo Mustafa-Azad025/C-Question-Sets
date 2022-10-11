@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 #include <bits/stdc++.h>
+=======
+#include <iostream>
+#include <limits>
+>>>>>>> d79e9557db295b82153439933ec7f9ddc416c750
 using namespace std;
 
 struct Node {
@@ -98,6 +103,7 @@ Node *DeleteMiddle(Node *head){
 
 int main()
 {
+<<<<<<< HEAD
     Node *head = new Node(10);
     head->next = new Node(20);
     head->next->next = new Node(30);
@@ -112,3 +118,35 @@ int main()
 
     return 0;
 }
+=======
+     Node *head = new Node(45);
+     head->next = new Node(12);
+     head->next->next = new Node(16);
+     displayList(head);
+     Node *front = new Node(1);
+     head = insertAtFront(head, front);
+     displayList(head);
+     Node *middle = new Node(5);
+     insertInMiddle(head, middle, 2);
+     displayList(head);
+     Node *end = new Node(10);
+     insertAtEnd(head, end);
+     displayList(head);
+     head = deleteAtFront(head);
+     displayList(head);
+     deleteInMiddle(head, 1);
+     displayList(head);
+     deleteAtEnd(head);
+     displayList(head);
+     Node *ptr = new Node(12);
+     // ptr = head;
+     // while(ptr->data != 16)
+     //      ptr = ptr->next;
+     if (!searchList(head, ptr))
+          cout << "NODE NOT FOUND IN LINKED LIST" << endl;
+     else
+          cout << "NODE FOUND IN LINKED LIST HAVING ADDRESS = " << ptr << endl;
+     cout << findLength(head) << endl;
+     return 0;
+}
+>>>>>>> d79e9557db295b82153439933ec7f9ddc416c750
