@@ -1,7 +1,3 @@
-// Name: Tanmay Shukla
-// Class: BE Second Year
-// Roll No : 21C3068
-// PROGRAM: Linked List
 #include <iostream>
 #include <limits>
 using namespace std;
