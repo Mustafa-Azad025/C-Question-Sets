@@ -1,138 +1,114 @@
-// Name: Tanmay Shukla
-// Class: BE Second Year
-// Roll No : 21C3068
-// PROGRAM: Linked List
-#include <iostream>
-#include <limits>
+#include <bits/stdc++.h>
 using namespace std;
-class Node
-{
-public:
-     int data;
-     Node *next;
-     Node()
-     {
-          data = 0;
-          next = NULL;
-     }
-     Node(int data)
-     {
-          this->data = data;
-          next = NULL;
-     }
+
+struct Node {
+    int data;
+    Node *next;
+    Node (int x){
+        data = x;
+        next = NULL;
+    }
 };
-void displayList(Node *head)
-{
-     static int list_count = 1;
-     // displaying the list from head to end
-     cout << "DISPLATING LIST NO: " << list_count++ << endl;
-     while (head != NULL)
-     {
-          cout << head->data << "\t";
-          head = head->next;
-     }
-     cout << endl;
+
+void print(Node *head){
+    while(head != NULL){
+        cout<<(head->data)<<" ";
+        head=head->next;
+    }
+};
+
+Node *insertBegin(Node *head,int x){
+    Node *temp = new Node(x);
+    temp->next = head;
+    return temp;
+};
+
+Node *insertEnd(Node *head, int x){
+    Node *temp = new Node(x);
+    if(head == NULL){
+        return temp;
+    }
+    while(head->next != NULL){
+        head = head->next;
+    }
+    head->next = temp;
+    return head;
+};
+
+int getlen(Node *head){
+    int count = 0;
+    while(head != NULL){
+        count++;
+        head = head->next;
+    }
+    return count;
 }
-Node *insertAtFront(Node *head, Node *x)
-{
-     // to insert 'x' node at the front
-     if (head == NULL)
-          return x;
-     x->next = head;
-     return x;
-}
-void insertInMiddle(Node *head, Node *x, int index)
-{
-     // to insert the element at the index passed in argument
-     for (int i = 0; i < index - 1; i++)
-          head = head->next;
-     x->next = head->next;
-     head->next = x;
-}
-void insertAtEnd(Node *head, Node *x)
-{
-     while (head->next != NULL)
-          head = head->next;
-     head->next = x;
-     x->next = NULL;
-}
-Node *deleteAtFront(Node *head)
-{
-     if (head == NULL)
-          return NULL;
-     head = head->next;
-     return head;
-}
-void deleteInMiddle(Node *head, int index)
-{
-     if (head == NULL)
-          return;
-     for (int i = 0; i < index - 1; i++)
-          head = head->next;
-     Node *ptr = head->next;
-     head->next = ptr->next;
-}
-void deleteAtEnd(Node *head)
-{
-     if (head == NULL)
-          return;
+
+Node *insertMiddle(Node *head,int x){
+    int len = getlen(head);
+    int mid = (len%2 == 0)?((len+1)/2):(len/2);
+    Node *temp = new Node(x);
+    
+    Node *curr = head;
+    int cnt = 0;
+    while (cnt < mid-1)
+    {
+        curr = curr->next;
+        cnt++;
+    }
+    temp->next = curr->next;
+
+    curr->next = temp;
+    return curr;
+};
+
+Node *DeleteBegin(Node *head){
+    if (head == NULL)
+    {
+        head = NULL;
+    }
+    return head->next;
+};
+
+Node *DeleteEnd(Node *head){
+    if (head == NULL)
+          return head;
      else
      {
           while (head->next->next != NULL)
                head = head->next;
           head->next = NULL;
      }
+     return head;
 }
-bool searchList(Node *head, Node *x)
-{
-     Node *ptr = new Node();
-     while (head->next != x && head != NULL)
-     {
-          head = head->next;
-          if (head == NULL)
-               return false;
-     }
-     return true;
+
+Node *DeleteMiddle(Node *head){
+    int len = getlen(head);
+    int mid = (len%2 == 0)?((len+1)/2):(len/2);
+    Node *curr = head;
+    int cnt = 0;
+    while (cnt < mid-1)
+    {
+        curr = curr->next;
+        cnt++;
+    }
+    curr->next = curr->next->next;
+    return curr;
 }
-int findLength(Node *head)
-{
-     int length = 0;
-     while (head != NULL)
-     {
-          length++;
-          head = head->next;
-     }
-     return length;
-}
+
 int main()
 {
-     Node *head = new Node(45);
-     head->next = new Node(12);
-     head->next->next = new Node(16);
-     displayList(head);
-     Node *front = new Node(1);
-     head = insertAtFront(head, front);
-     displayList(head);
-     Node *middle = new Node(5);
-     insertInMiddle(head, middle, 2);
-     displayList(head);
-     Node *end = new Node(10);
-     insertAtEnd(head, end);
-     displayList(head);
-     head = deleteAtFront(head);
-     displayList(head);
-     deleteInMiddle(head, 1);
-     displayList(head);
-     deleteAtEnd(head);
-     displayList(head);
-     Node *ptr = new Node(12);
-     // ptr = head;
-     // while(ptr->data != 16)
-     //      ptr = ptr->next;
-     if (!searchList(head, ptr))
-          cout << "NODE NOT FOUND IN LINKED LIST" << endl;
-     else
-          cout << "NODE FOUND IN LINKED LIST HAVING ADDRESS = " << ptr << endl;
-     cout << findLength(head) << endl;
-     return 0;
+    Node *head = new Node(10);
+    head->next = new Node(20);
+    head->next->next = new Node(30);
+    head = insertBegin(head,40);
+    insertEnd(head,50);
+    insertMiddle(head,60);
+    head=DeleteBegin(head);
+    DeleteEnd(head);
+    DeleteMiddle(head);
+    DeleteMiddle(head);
+    print(head);
+
+    return 0;
 }
