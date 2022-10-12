@@ -1,169 +1,105 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-class Node
-{
-public:
+
+struct Node{
     int data;
     Node *next;
-
-    Node(int x)
-    {
+    Node (int x){
         data = x;
         next = NULL;
     }
 };
-bool findlist(Node *head, int x)
-{
 
-    while (head->next != NULL)
-    {
-        head = head->next;
-        if (head->data == x)
-            return true;
+void print(Node *head){
+    while(head != NULL){
+        cout<<(head->data)<<" ";
+        head=head->next;
     }
-    return false;
+};
+
+Node *insertBegin(Node *head, int x){
+    Node *temp = new Node(x);
+    temp->next = head;
+    return temp;
 }
-int getlength(Node *head)
-{
-    int count = 1;
-    if (head == NULL)
-    {
-        return 1;
+
+Node *insertEnd(Node *head,int x){
+    Node *temp = new Node(x);
+    while(head->next != NULL){
+        head = head->next;
     }
-    while (head->next != NULL)
-    {
+    head->next = temp;
+    return head;
+}
+
+int getlength(Node *head){
+    int count = 0;
+    while(head != NULL){
         count++;
         head = head->next;
     }
     return count;
 }
-void insertBegin(Node* &head, int x)
-{
 
+Node *insertMiddle(Node *head,int x){
+    int len = getlength(head);
+    int mid = (len%2 == 0)?((len+1)/2):(len/2);
     Node *temp = new Node(x);
-    temp->next = head;
-    head = temp;
-}
-void insertMiddle(Node* &head, int ind, int x)
-{
-    Node *temp = new Node(x);
-    Node *curr = head;
     int cnt = 0;
-    while (cnt < ind - 1)
-    {
-        curr = curr->next;
+    Node *curr = head;
+    while(cnt < mid - 1){
         cnt++;
+        curr = curr->next;
     }
     temp->next = curr->next;
-
     curr->next = temp;
+    return curr;
 }
-void insertEnd(Node *head, int x)
-{
-    Node *temp = new Node(x);
 
-    if (head == NULL)
-    {
-        head = temp;
-    }
+Node *DeleteBegin(Node *head){
+    return head->next;
+}
 
-    while (head->next != NULL)
-    {
+Node *DeleteEnd(Node *head){
+    while(head->next->next != NULL){
         head = head->next;
-    }
-    head->next = temp;
-}
-
-void DeleteBegin(Node *&head)
-{
-    if (head == NULL)
-    {
-        head = NULL;
-    }
-    head = head->next;
-}
-
-void DeleteEnd(Node *head)
-{
-
-    int cnt = 1;
-    while (cnt < getlength(head))
-    {
-        head = head->next;
-        cnt++;
     }
     head->next = NULL;
+    return head;
 }
 
-void DeleteMiddle(Node *head, int ind)
-{
-
-    if (head == NULL || head->next == NULL)
-    {
-        head = NULL;
-        return;
-    }
+Node *DeleteMiddle(Node *head){
+    int len = getlength(head);
+    int mid = (len%2 == 0)?((len+1)/2):(len/2);
     int cnt = 0;
-    if (ind == 0)
-    {
+    while(cnt < mid -1){
+        cnt++;
         head = head->next;
     }
-    else
-    {
-        while (cnt < ind - 1)
-        {
-            head = head->next;
-            cnt++;
+    head->next = head->next->next;
+    return head;
+}
+
+int findelem(Node *head,int x){
+    int cnt = 0;
+    while(head != NULL){
+        cnt++;
+        if(head->data == x){
+            return cnt;
         }
-        head->next = head->next->next;
+        head = head->next;
     }
-}
-void Print(Node *head)
-{
-    if (head == NULL)
-    {
-        return;
-    }
-    cout << head->data << " ";
-    Print(head->next);
-    if (head->next == NULL)
-    {
-        return;
-    }
-}
-
-int main()
-{
-
-    Node *head = new Node(10);
-    head->next = new Node(22);
-    head->next->next = new Node(34);
-    head->next->next->next = new Node(45);
-
-    DeleteMiddle(head, 1);
-    cout << "Delete at index 1 : " << endl;
-    Print(head); cout<<endl;
-    insertBegin(head, 144);
-    cout << "Insert at head : " << endl;
-    Print(head); cout<<endl;
-
-    DeleteEnd(head);
-    cout << "Delete at end " << endl;
-    Print(head); cout<<endl;
-
-    insertEnd(head, 89);
-    cout << "Insert at end : " << endl;
-    Print(head); cout<<endl;
-
-    DeleteBegin(head);
-    cout << "Delete at start : " << endl;
-    Print(head); cout<<endl;
-
-    insertMiddle(head, 2, 39);
-    cout << "Insert at index 2 : " << endl;
-    Print(head); cout<<endl;
-
+    return -1;
     
+    
+}
 
+int main (){
+    
+    Node *head = new Node(10);
+    head->next = new Node(20);
+    head->next->next = new Node(30);
+    cout<<findelem(head,20)<<endl;
+    print(head);
     return 0;
 }
